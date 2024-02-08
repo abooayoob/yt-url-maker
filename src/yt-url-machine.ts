@@ -1,44 +1,21 @@
-import { createMachine, raise } from "xstate";
+import { createMachine, assign } from "xstate";
+import { getYtIdFromUrl } from "./get-yt-id-from-url";
 
 export const ytUrlMachine = createMachine(
   {
-    /** @xstate-layout N4IgpgJg5mDOIC5QE0AqACAqgJQDLoFsBDAazACcA6XAeyInTXQAUAbIgTwsoGEALMAGMS6AJIAzckQJh0qIlADEAbQAMAXUSgADjVgBLAC76aAOy0gAHogAsAdlWUAnAGYAbDZdOAjDadunAFZVQIAaEA5EV0pPNwAOJzsgtxS7OwBfdPCmHHxiMipaekYMNk5ufiERCSkZOQUVb00kEF0DYzMLawQAJkCXSh7vVScetzHAtzsXGxtwyIRvJ0cZ1W9A7ztJuMDAnczsjFzCUm4ihiYyrioAZTBDAFdtdDNkGgfHgCMwGukAQWYomwYHoHEU5BBEA4amaOj0RhM5ha3SSTkowRsKXGqlUPR6Nh680QSzilCS4xmLncmNGBxAOTwJwKlGBoMUUBohnQHGMEBhFjaCM6yOJVNJcTiqj8+Jc3hcdjlRIQAFp-JRZVK7PEXD1Ze4Mll6UdGfluKyobwBMJ0OIaORubyVBoBfCOkjQN1vHK3OiqUMEoEnIkxkrRmSelrhjqbMEEnSGXlTlRzRxLVUbXaHfoII1Ya1XYiusS5YFKDtPPY4utEnElZtHFtfIGnDs3N4pnF48bE8yU9Q6AwAG7ZsA0RTDiCj9CsAeQfktQVuouLHUDOz4vpJDXjOs+SghBWzBzY9tdrAmpMsyGpm58GgAd3QD3IrEUsHu6FghiI5EMqH0MjznC7SFiKizePigzuHKriqG2Oy1hEiCyqSOIklWywOFqbhnscprJtelC3g+T4vm+H5gKYED-oBzoLgWwoeqKBJlnYcSeDKcq4t4SpeDYMQSnYBIzG4qhpLqmSGqYNCTvALQJkyFAuiBjFWMSgR2IMwyjOMbiTNMsxKsqEaOMkLiqC4cQ9K4wmBLhF7MucJQsOw1zKUK7pqb0IRaSMYwTFMMxzEhKpeqWHgSl4srBOuPSdoaCn4f2xSXK5FRWtUkjSLI8hQO5S5gfYPpajqgaeHB6wzEZcXqn0ox7O2uxJAahznj2ZwDs5VzcHcjzPK87xfD8WUEACQLXvloFMQgsxossbbyu27jxMFCzeJKMR6VMmxUnKsw4Ql3aKQRoKTap3Q+KWez4thLYaQSRnrQMbhUl4FnmVZSTxa1eGXn2lTWra9o8tmZ2eRdL3olZRUBDsQmEiFyrhfEomSm2MZLDY31Gm1x1XqCyVDiONBg8uXFomsEExjSokeEqUwxPKuxwXEspY229ntSdFoAOpEEYGb2vopjaB8pNgf4mkmQkbNsRsdh1vElDtvEfT4g1mIHT9DlmoRxGPs+rDi9NEEtuiaRpF4TWBDGSoRmicQOOxUyBBGT0HZkQA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QE0AqACAqgJQDLoFsBDAazACcA6XAeyInTXQAUAbIgTwoGJyx6OAbQAMAXUSgADjVgBLAC6yaAOwkgAHogDsAZh2UATADYAjEYCcwgBxWtBnQBYArABoQHRAFoTwh4eE6JuYOVk4OOkZOTuYAvjFuTDj4xGRU2PwQHNxQNPLoHIoQIuJIINJyiipqmggmeuaUwSYGwgZa5qZWbh4InuZahk56rSZOVuZWBlNxCRhJhKQUlOkClADCABZgAMYk6ABmNOT5hdzFauUKSqqlNSZ1RpRDOgYm49H9xt2I5gaUdlpTAEDM5rLF4iBEngFqllhkOOstrsDkcTrIIGcTCUpDIrlVboh7jonJRQuEHForKN+l13IStMJ-k4TM5zBMnKYjJSZpC5tCUksVplqHQGAA3dFgGjcCUQKXoViiyDnUqXSo3UB3F76OwOAxOdqBYRGAzfWrmEyUYQGlkU40tMw8qHJRZpeGUADKGxoAHd0ABXcisbiwMB5WDyIjkeSoWQEMAqnEVa7VQm+AYc4lNHRUhzhM0GUJPPO-Cw6SwtIxOvku2FChFe30BoMhsPoMDKCCx+OJsq49Wp2rWxlgowOaxOYS-CJmkKW3TWk0gqwOIyhatYfmuuGrRt+wOsSgASQgrDA3G2NEkHGbrF7apTBNq4Utw7GHIpox0Zqify0WiCKwjQcX4TC0Dd5gFN1d29fcg0oABRchyFRS9r1kZQoG4dQIyIeQwEoIh9nw8gAAofGEYQAEpuGdGFBXdPdb0Q5DUKvDgMKge9+0fTVCT0S1iTsHwdCnZpzFnFdKApXR2iMF5+mEEwIK3OtGNg5iPX9bZtjgWB0DQjjMOw3D8MI4iKHIyjqNomt6Og4UmIPT1tN02B9MMzjuOTfE+NqATKCE14AjEgwJLpBAx0ZBwwIdV46icAwVNrBiYKbZy1nYzjb24CAVAIjCxRoMhKDoqCd0cjSMqyzDbwQQqaG2PDrmKby8Q1DRCRNAZxgpSJ7gtFktDNIxRsaC02VGYwKWmCEyu3etPSq+DMvQ2qD24CgUKoSR2HkQ5yAIUq7PKxanJWmqoDqhqmvVVqxAuHjfM62putJYJAWZIJ7gpWd+koCwQUiNl7Faew4ghZQaDleBSnm1JHp8jqamZfQzCiaIp3sLRXAizw2ktcZBq0CkjT0ZL7JFehGAwNhOAoRH2sHDlLXRqJLGnHGzW8XxGmZGwpn1YIOicCnTvhRmByfWxLXMDkwjHSZJ1+vG3j8A1TDZSwfGiRwxYW91Nh2PYDrRCBJd4l6Jr5yJVxCfV025kD-iUoxWisNdAItfW1NWWhqdlKULeerUpyte4QQVjpjQcEaBnCHHJzXQIQlMH3UuFAB1IgFBRY4MMkf15GD5Gfi5QwGXGFPKWZYaIrMKxKDMNd9Uj3NRvThyG2W1gS8HZogMCg1gtEi0wrNQJCamUJoimmlRbmk6DbSuDDxPM8+6fOo80MLkIjzVcDXCnpf2kvQ8xadoYvGTuKu79L4KQ7aDMuze-JZQImTGawAOCWOIrzCSOWHJzDDAmIEW+Z0e4uR0npF+a0oBvxeg8P8UxEo6H-MEcs-8eh2EeBEOW2pr5BAXrMTcKUu5LQfoeVaRkroHiQXcaIJIogmiAlyKY1ofwGgBr8Q+INRKzTiEAA */
     id: "YT URL maker",
     initial: "Load YT Player",
     context: {
-      player: null,
-      iframeId: "yt-iframe-api",
       ytid: null,
+      startTime: null,
+      endTime: null,
+      generatedUrl: null,
     },
     states: {
       "Load YT Player": {
-        initial: "Check Iframe Tag",
-
-        states: {
-          "Check Iframe Tag": {
-            always: [
-              {
-                target: "Setup onYoutubeIframAPIReady",
-                cond: "iframe tag exists",
-              },
-              {
-                target: "Setup onYoutubeIframAPIReady",
-                actions: ["create iframe tag"],
-              },
-            ],
-
-            entry: "check url",
-          },
-
-          "Setup onYoutubeIframAPIReady": {
-            entry: {
-              type: "create and store yt player",
-            },
-
-            on: {
-              ready: "#YT URL maker.Ready",
-            },
-          },
+        on: {
+          ready: "Ready",
         },
       },
 
@@ -52,7 +29,7 @@ export const ytUrlMachine = createMachine(
 
         states: {
           "Check for ytid": {
-            entry: "check input",
+            entry: ["check url"],
 
             always: [
               {
@@ -78,14 +55,44 @@ export const ytUrlMachine = createMachine(
             on: {
               "set startTime": {
                 target: "Show url",
-                internal: true,
+                actions: "assign startTime",
               },
 
               "set endTime": {
                 target: "Show url",
-                internal: true,
+                actions: "assign endTime",
               },
             },
+
+            states: {
+              Idle: {
+                on: {
+                  "copy url": "Copying url",
+                },
+              },
+
+              "Error copying": {
+                after: {
+                  "1000": "Idle",
+                },
+              },
+
+              "Success copying": {
+                after: {
+                  "1000": "Idle",
+                },
+              },
+
+              "Copying url": {
+                invoke: {
+                  src: "copy url",
+                  onDone: "Success copying",
+                  onError: "Error copying",
+                },
+              },
+            },
+
+            initial: "Idle",
           },
         },
 
@@ -97,8 +104,9 @@ export const ytUrlMachine = createMachine(
         | { type: "tag created" }
         | { type: "ready" }
         | { type: "video loaded" }
-        | { type: "set startTime"; payload: { startTime: number } }
-        | { type: "set endTime"; payload: { endTime: number } }
+        | { type: "set startTime" }
+        | { type: "set endTime" }
+        | { type: "copy url" }
         | {
             type: "got ytid";
             payload: {
@@ -106,9 +114,15 @@ export const ytUrlMachine = createMachine(
             };
           },
       context: {} as {
-        player: YT.Player | null;
-        iframeId: "yt-iframe-api";
         ytid: string | null;
+        startTime: number | null;
+        endTime: number | null;
+        generatedUrl: string | null;
+      },
+      services: {} as {
+        "copy url": {
+          data: void;
+        };
       },
     },
     tsTypes: {} as import("./yt-url-machine.typegen").Typegen0,
@@ -117,28 +131,71 @@ export const ytUrlMachine = createMachine(
   },
   {
     actions: {
-      "check url": (context, event) => {
+      "check url": assign((context, event) => {
         const url = new URL(window.location.href);
-        const ytid = url.searchParams.get("ytid");
-        if (ytid) {
-          // maybe if length is noot 11 then throw error
-          context.ytid = ytid;
+        let ytid = url.searchParams.get("ytid");
+        url.searchParams.delete("ytid");
+        if (ytid && ytid.includes("http")) {
+          ytid = getYtIdFromUrl(url.toString());
+        }
+        return {
+          ytid,
+        };
+      }),
+      "assign ytid": assign((context, event) => {
+        if (event.payload.ytid.includes("http")) {
+          return {
+            ytid: getYtIdFromUrl(event.payload.ytid),
+          };
+        } else {
+          return {
+            ytid: event.payload.ytid,
+          };
+        }
+      }),
+      "calculate url": assign((context, event) => {
+        const url = new URL(`https://youtu.be/${context.ytid}`);
+        if (context.startTime) {
+          url.searchParams.set("start", context.startTime.toString());
+        }
+        if (context.endTime) {
+          url.searchParams.set("end", context.endTime.toString());
+        }
+        return {
+          generatedUrl: url.toString(),
+        };
+      }),
+      loadVideoById: (context, event) => {
+        window.player.loadVideoById(context.ytid || "");
+      },
+      "assign startTime": assign((context, event) => {
+        console.log("assigning start time");
+        console.log(window.player.getCurrentTime());
+        return {
+          startTime: window.player.getCurrentTime(),
+        };
+      }),
+      "assign endTime": assign((context, event) => {
+        return {
+          endTime: window.player.getCurrentTime(),
+        };
+      }),
+    },
+    guards: {
+      "has ytid": (context, event) => {
+        return context.ytid !== null;
+      },
+    },
+    services: {
+      "copy url": async (context, event) => {
+        if (!context.generatedUrl) {
+          throw new Error("No url to copy");
+        } else {
+          return navigator.clipboard.writeText(context.generatedUrl);
         }
       },
-      "create iframe tag": (context, event) => {
-        const tag = document.createElement("script");
-        tag.src = "https://www.youtube.com/iframe_api";
-        tag.id = context.iframeId;
-        document.body.appendChild(tag);
-      },
-      "create and store yt player": (context, event) => {},
     },
-    services: {},
-    guards: {
-      "iframe tag exists": (context, event) => {
-        return document.querySelector(context.iframeId) !== null;
-      },
-    },
+
     delays: {},
   }
 );
