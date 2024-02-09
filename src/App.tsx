@@ -59,7 +59,6 @@ function App() {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log("submit", event.currentTarget.theinput.value);
     send({
       type: "got ytid",
       payload: {

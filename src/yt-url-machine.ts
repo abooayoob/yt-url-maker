@@ -134,7 +134,7 @@ export const ytUrlMachine = createMachine(
       "check url": assign((context, event) => {
         const url = new URL(window.location.href);
         let ytid = url.searchParams.get("ytid");
-        url.searchParams.delete("ytid");
+
         if (ytid && ytid.includes("http")) {
           ytid = getYtIdFromUrl(url.toString());
         }
