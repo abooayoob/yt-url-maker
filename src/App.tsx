@@ -13,7 +13,6 @@ function App() {
   const [state, send, actor] = useMachine(ytUrlMachine);
 
   function onPlayerReady(event: YT.PlayerEvent) {
-    console.log("player ready");
     send({ type: "ready" });
   }
   function onPlayerStateChange(event: YT.OnStateChangeEvent) {
@@ -25,12 +24,11 @@ function App() {
       [YT.PlayerState.PAUSED]: "Paused",
       [YT.PlayerState.ENDED]: "Ended",
     };
-    console.log("statechange", nameMap[event.data]);
-    if (
-      event.data === YT.PlayerState.PLAYING ||
-      event.data === YT.PlayerState.BUFFERING
-    ) {
-      send({ type: "video loaded" });
+    if (event.data === YT.PlayerState.PLAYING) {
+      send({
+        type: "video loaded",
+        payload: { duration: window.player.getDuration() },
+      });
     }
   }
   function onPlayerError(event: YT.OnErrorEvent) {}
@@ -68,8 +66,6 @@ function App() {
   }
 
   function handlePaste(event: React.ClipboardEvent<HTMLInputElement>) {
-    console.log("pasted");
-    console.log(event.clipboardData.getData("text"));
     send({
       type: "got ytid",
       payload: {
@@ -92,7 +88,13 @@ function App() {
   return (
     <>
       <div id="player"></div>
-      {state.matches("Ready.Show url") && <h2>{state.context.generatedUrl}</h2>}
+      {state.matches("Ready.Show url") &&
+        !state.matches("Ready.Show url.Show error") && (
+          <h2>{state.context.generatedUrl}</h2>
+        )}
+      {state.matches("Ready.Show url.Show error") && (
+        <h2 style={{ color: "red" }}>{state.context.error}</h2>
+      )}
       {state.matches("Ready.Show url") && (
         <button
           style={{
@@ -118,16 +120,27 @@ function App() {
           </form>
           <button
             onClick={() => {
-              send({ type: "set startTime" });
+              send({
+                type: "set startTime",
+                payload: { startTime: window.player.getCurrentTime() },
+              });
             }}
           >
             start time
           </button>
-          <button onClick={() => send({ type: "set endTime" })}>
+          <button
+            onClick={() =>
+              send({
+                type: "set endTime",
+                payload: { endTime: window.player.getCurrentTime() },
+              })
+            }
+          >
             end time
           </button>
         </div>
       )}
+      {/* <pre>{JSON.stringify(state.context, null, 2)}</pre> */}
     </>
   );
 }

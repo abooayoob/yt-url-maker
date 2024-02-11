@@ -19,6 +19,9 @@ export interface Typegen0 {
     "xstate.after(1000)#YT URL maker.Ready.Show url.Success copying": {
       type: "xstate.after(1000)#YT URL maker.Ready.Show url.Success copying";
     };
+    "xstate.after(1500)#YT URL maker.Ready.Show url.Show error": {
+      type: "xstate.after(1500)#YT URL maker.Ready.Show url.Show error";
+    };
     "xstate.init": { type: "xstate.init" };
   };
   invokeSrcNameMap: {
@@ -31,15 +34,20 @@ export interface Typegen0 {
     services: never;
   };
   eventsCausingActions: {
+    "assign duration": "video loaded";
     "assign endTime": "set endTime";
+    "assign error": "set endTime" | "set startTime";
     "assign startTime": "set startTime";
     "assign ytid": "got ytid";
     "calculate url": "set endTime" | "set startTime" | "video loaded";
     "check url": "ready";
     loadVideoById: "" | "got ytid";
+    "reset error": "xstate.after(1500)#YT URL maker.Ready.Show url.Show error";
   };
   eventsCausingDelays: {};
   eventsCausingGuards: {
+    "after startTime": "set endTime";
+    "before endTime": "set startTime";
     "has ytid": "";
   };
   eventsCausingServices: {
@@ -54,6 +62,7 @@ export interface Typegen0 {
     | "Ready.Show url.Copying url"
     | "Ready.Show url.Error copying"
     | "Ready.Show url.Idle"
+    | "Ready.Show url.Show error"
     | "Ready.Show url.Success copying"
     | "Ready.Wait for input"
     | {
@@ -67,6 +76,7 @@ export interface Typegen0 {
                 | "Copying url"
                 | "Error copying"
                 | "Idle"
+                | "Show error"
                 | "Success copying";
             };
       };

@@ -3,7 +3,7 @@ import { getYtIdFromUrl } from "./get-yt-id-from-url";
 
 export const ytUrlMachine = createMachine(
   {
-    /** @xstate-layout N4IgpgJg5mDOIC5QE0AqACAqgJQDLoFsBDAazACcA6XAeyInTXQAUAbIgTwoGJyx6OAbQAMAXUSgADjVgBLAC6yaAOwkgAHogDsAZh2UATADYAjEYCcwgBxWtBnQBYArABoQHRAFoTwh4eE6JuYOVk4OOkZOTuYAvjFuTDj4xGRU2PwQHNxQNPLoHIoQIuJIINJyiipqmggmeuaUwSYGwgZa5qZWbh4InuZahk56rSZOVuZWBlNxCRhJhKQUlOkClADCABZgAMYk6ABmNOT5hdzFauUKSqqlNSZ1RpRDOgYm49H9xt2I5gaUdlpTAEDM5rLF4iBEngFqllhkOOstrsDkcTrIIGcTCUpDIrlVboh7jonJRQuEHForKN+l13IStMJ-k4TM5zBMnKYjJSZpC5tCUksVplqHQGAA3dFgGjcCUQKXoViiyDnUqXSo3UB3F76OwOAxOdqBYRGAzfWrmEyUYQGlkU40tMw8qHJRZpeGUADKGxoAHd0ABXcisbiwMB5WDyIjkeSoWQEMAqnEVa7VQm+AYc4lNHRUhzhM0GUJPPO-Cw6SwtIxOvku2FChFe30BoMhsPoMDKCCx+OJsq49Wp2rWxlgowOaxOYS-CJmkKW3TWk0gqwOIyhatYfmuuGrRt+wOsSgASQgrDA3G2NEkHGbrF7apTBNq4Utw7GHIpox0Zqify0WiCKwjQcX4TC0Dd5gFN1d29fcg0oABRchyFRS9r1kZQoG4dQIyIeQwEoIh9nw8gAAofGEYQAEpuGdGFBXdPdb0Q5DUKvDgMKge9+0fTVCT0S1iTsHwdCnZpzFnFdKApXR2iMF5+mEEwIK3OtGNg5iPX9bZtjgWB0DQjjMOw3D8MI4iKHIyjqNomt6Og4UmIPT1tN02B9MMzjuOTfE+NqATKCE14AjEgwJLpBAx0ZBwwIdV46icAwVNrBiYKbZy1nYzjb24CAVAIjCxRoMhKDoqCd0cjSMqyzDbwQQqaG2PDrmKby8Q1DRCRNAZxgpSJ7gtFktDNIxRsaC02VGYwKWmCEyu3etPSq+DMvQ2qD24CgUKoSR2HkQ5yAIUq7PKxanJWmqoDqhqmvVVqxAuHjfM62putJYJAWZIJ7gpWd+koCwQUiNl7Faew4ghZQaDleBSnm1JHp8jqamZfQzCiaIp3sLRXAizw2ktcZBq0CkjT0ZL7JFehGAwNhOAoRH2sHDlLXRqJLGnHGzW8XxGmZGwpn1YIOicCnTvhRmByfWxLXMDkwjHSZJ1+vG3j8A1TDZSwfGiRwxYW91Nh2PYDrRCBJd4l6Jr5yJVxCfV025kD-iUoxWisNdAItfW1NWWhqdlKULeerUpyte4QQVjpjQcEaBnCHHJzXQIQlMH3UuFAB1IgFBRY4MMkf15GD5Gfi5QwGXGFPKWZYaIrMKxKDMNd9Uj3NRvThyG2W1gS8HZogMCg1gtEi0wrNQJCamUJoimmlRbmk6DbSuDDxPM8+6fOo80MLkIjzVcDXCnpf2kvQ8xadoYvGTuKu79L4KQ7aDMuze-JZQImTGawAOCWOIrzCSOWHJzDDAmIEW+Z0e4uR0npF+a0oBvxeg8P8UxEo6H-MEcs-8eh2EeBEOW2pr5BAXrMTcKUu5LQfoeVaRkroHiQXcaIJIogmiAlyKY1ofwGgBr8Q+INRKzTiEAA */
+    /** @xstate-layout N4IgpgJg5mDOIC5QE0AqACAqgJQDLoFsBDAazACcA6XAeyInTXQAUAbIgTwoGJyx6OAbQAMAXUSgADjVgBLAC6yaAOwkgAHogDMwgEyUAnLoCsADgBsxncOMBGACwAaEB0QBac5Xvmtu+6ZtdA2C-UwBfMOcmHHxiMipsfggObigaeXQORQgRcSQQaTlFFTVNBFstLQNDe1tdPQB2A3NbU2dXBDcDBsoTSr1bMwNTXVGIqIwYwlIKSkSBSgBhAAswAGMSdAAzGnJM7O5ctUKFJVV8stsKzytfVoNjYIbdc3bEI0pnhpbhX3tjYSmAzjEDRPDTeJzJIcJarDbbXb7WQQQ62PJSGSnEoXRBXLTGSimYz2LT2BqmQbdNouXENYSfOz-YJElrmckgsGxGYJaHUOgMABuyLANG4QogIvQrH5kCO+ROxXOoEuvi0nz8JiaWlswnMuje5QMtkoNgaDjJuvqtnMHMm4Lis3myUoAGVljQAO7oACu5FY3FgYAysHkRHI8lQsgIYDlGKKZ1KiAB9K+wwCDS0ZteNIQpP0gIpxlGxJaRfstqw9u5UIWbs9Pr9AaD6BDYYjUZjaOOmMViYQzXz1uaxjZwjJDWMBpJBOMdO6xisur1-wrUwdPNr7q9vv9gYyYGUEEj0djBR7CZxCCL9KCgN0dTZZgnBrNPTHRZMwjqRnM5cioLtLlISdGE623Rs93QA8jw7QQu3lc9sWVRBTCBQkzCLVpKVsBoXwsGpMMGBpvgnP8JkrIDHV5MCG1YSgAEkIFYMBuDWGhJA4WjTwVC9kPKMk1QqEwXnsfw-EnHNzC-ShH1COwDF1CxVyrYDqK3WjKAAUXIchETYjjZGUKBuHUVt5DASgiC2czyAACh1YRhAASm4TkISozd6x3LSdL09iOEMqBuMQpUNFxTM1RJI07CuPR7wNW5KC0AJfwBMkrjNZTKI3Z0aO8l1vTWNY4FgdB9ICoyTLMiyrJs+zHOc1zAPcnLQPU-LCuK2BSvKwLgvjJCwvKKpqmnXQRgBM1UIkjozQJIEixHAx7F1WwjCylqa1y9q-SWfzAto7gIBUCzDIFGgyEoNz1y2tqvN2xZ9qM2iEDOmg1iIRVcn6rFQsucxzGqbpR0eep6nMalZsGQkHhMQGVpadb-2u6sQNdHa6Megznp3bgKF0qhJHYeQdnIAgruam60byh6nqgF63o+r6xB+3tL2tQHDBImwjD0RSEu8ShHlnbUEdEpHyLXVG1PuuiaPx3YqtDczLOsih7OTFyUdUzzwLl9SFfIVneKGuphGqX8dCNYi1r1fUc0eUwTRJHDTD+TNZwif9lBoCV4HybWKG7Aa-txVCZICMxb1aYkZvcXQzRho0gjZLC-C0DabtoehGAwNhOCDhCQ77XQtE8CGbBGBSY-+A03DqJ2AZLHRfAsFlM+lgRg9+vt-n0VNUOEDMszr1p7CF7571di1rQ7nXnRWdZNlJpEIG7tm+KNIGRxLMS0twnM3Hsao6WtPQ27WoFbDnjznWzwVhRodeTZVc2TSucTvGaXUnEknoSQnACCGosLDX2RpTTuzoADqRAFAIj2IZSQ3p5DP0GmUZoPQE6AgMKLckdgD4dGtE7DmE1xIUm8DacBFFNrUwxqg0OCBTC1HQkSe8hZrYGh0MaWoFgPz+GeGlG+rV0aywYkxMA9C+wVHwqSHBgQySpwNFJY0lRRwNGPviSwwIqFS3nndPWPkCZlTppI9mAlCSZnUbDGwvgpzLRYQ8UwzwqjkhsEI26IiDEFSKiVYx2MoCmL4g4MchIxzeH+JHUWL4Jy9FTMRBczQAbuNoaIrGFV6Y7kCabHwPQfAjD8AJIIBDEBSRuA8DMwTfzH10MkmWXiDa+XIFky4NgCTqPGubY+3xajFIQC0J2OC7B6DZBDFa4QvZAA */
     id: "YT URL maker",
     initial: "Load YT Player",
     context: {
@@ -11,6 +11,8 @@ export const ytUrlMachine = createMachine(
       startTime: null,
       endTime: null,
       generatedUrl: null,
+      error: null,
+      duration: null,
     },
     states: {
       "Load YT Player": {
@@ -44,7 +46,10 @@ export const ytUrlMachine = createMachine(
             entry: "loadVideoById",
 
             on: {
-              "video loaded": "Show url",
+              "video loaded": {
+                target: "Show url",
+                actions: "assign duration",
+              },
             },
           },
 
@@ -53,15 +58,29 @@ export const ytUrlMachine = createMachine(
             entry: "calculate url",
 
             on: {
-              "set startTime": {
-                target: "Show url",
-                actions: "assign startTime",
-              },
+              "set startTime": [
+                {
+                  target: "Show url",
+                  actions: ["assign startTime"],
+                  cond: "before endTime",
+                },
+                {
+                  target: ".Show error",
+                  actions: "assign error",
+                },
+              ],
 
-              "set endTime": {
-                target: "Show url",
-                actions: "assign endTime",
-              },
+              "set endTime": [
+                {
+                  target: "Show url",
+                  actions: ["assign endTime"],
+                  cond: "after startTime",
+                },
+                {
+                  target: ".Show error",
+                  actions: "assign error",
+                },
+              ],
             },
 
             states: {
@@ -90,6 +109,15 @@ export const ytUrlMachine = createMachine(
                   onError: "Error copying",
                 },
               },
+
+              "Show error": {
+                after: {
+                  "1500": {
+                    target: "Idle",
+                    actions: "reset error",
+                  },
+                },
+              },
             },
 
             initial: "Idle",
@@ -103,9 +131,19 @@ export const ytUrlMachine = createMachine(
       events: {} as
         | { type: "tag created" }
         | { type: "ready" }
-        | { type: "video loaded" }
-        | { type: "set startTime" }
-        | { type: "set endTime" }
+        | { type: "video loaded"; payload: { duration: number } }
+        | {
+            type: "set startTime";
+            payload: {
+              startTime: number;
+            };
+          }
+        | {
+            type: "set endTime";
+            payload: {
+              endTime: number;
+            };
+          }
         | { type: "copy url" }
         | {
             type: "got ytid";
@@ -118,6 +156,8 @@ export const ytUrlMachine = createMachine(
         startTime: number | null;
         endTime: number | null;
         generatedUrl: string | null;
+        error: string | null;
+        duration: number | null;
       },
       services: {} as {
         "copy url": {
@@ -153,6 +193,11 @@ export const ytUrlMachine = createMachine(
           };
         }
       }),
+      "assign duration": assign((context, event) => {
+        return {
+          duration: event.payload.duration,
+        };
+      }),
       "calculate url": assign((context, event) => {
         const url = new URL(`https://youtu.be/${context.ytid}`);
         if (context.startTime) {
@@ -169,21 +214,51 @@ export const ytUrlMachine = createMachine(
         window.player.loadVideoById(context.ytid || "");
       },
       "assign startTime": assign((context, event) => {
-        console.log("assigning start time");
-        console.log(window.player.getCurrentTime());
         return {
-          startTime: window.player.getCurrentTime(),
+          startTime: event.payload.startTime,
         };
       }),
       "assign endTime": assign((context, event) => {
         return {
-          endTime: window.player.getCurrentTime(),
+          endTime: event.payload.endTime,
+        };
+      }),
+      "assign error": assign((context, event) => {
+        switch (event.type) {
+          case "set startTime":
+            return {
+              error: "Start time must be before end time",
+            };
+          case "set endTime":
+            return {
+              error: "End time must be after start time",
+            };
+          default:
+            return {
+              error: "Unknown error",
+            };
+        }
+      }),
+      "reset error": assign((context, event) => {
+        return {
+          error: null,
         };
       }),
     },
     guards: {
       "has ytid": (context, event) => {
         return context.ytid !== null;
+      },
+      "before endTime": (context, event) => {
+        return (
+          context.endTime === null || event.payload.startTime < context.endTime
+        );
+      },
+      "after startTime": (context, event) => {
+        return (
+          context.startTime === null ||
+          event.payload.endTime > context.startTime
+        );
       },
     },
     services: {
