@@ -91,7 +91,7 @@ function App() {
 
   return (
     <main className="h-full min-h-screen w-full min-w-full bg-slate-100 dark:bg-slate-800 dark:text-slate-300">
-      <div className="mx-auto mt-0 grid max-w-3xl grid-cols-1 grid-rows-[2fr_1fr]">
+      <div className="mx-auto mt-0 grid h-dvh max-w-3xl grid-cols-1 grid-rows-[1fr_1fr]">
         <div id="player" className="aspect-video h-[60vh] w-full"></div>
 
         <div className="flex flex-col gap-4 p-4">
