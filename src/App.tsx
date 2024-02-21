@@ -145,7 +145,7 @@ function App() {
           )}
           {state.matches("Ready.Show url") &&
             !state.matches("Ready.Show url.Show error") && (
-              <h2>{state.context.generatedUrl}</h2>
+              <h2 className="break-all">{state.context.generatedUrl}</h2>
             )}
           {state.matches("Ready.Show url.Show error") && (
             <h2 className="text-red-600">{state.context.error}</h2>
