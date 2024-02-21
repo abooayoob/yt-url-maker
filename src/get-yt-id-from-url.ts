@@ -11,6 +11,12 @@ export function getYtIdFromUrl(url: string) {
   if (match3 && match3[1].length === 11) {
     return match3[1];
   }
+
+  const match4 = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]+)/);
+  if (match4 && match4[1].length === 11) {
+    return match4[1];
+  }
+
   try {
     const urlObj = new URL(url);
     const searchParams = urlObj.searchParams;
