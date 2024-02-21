@@ -101,7 +101,7 @@ function App() {
                 >
                   <Label className="text-sm">Url or Id</Label>
                   <Input
-                    className="rounded-sm bg-slate-600 px-2 text-slate-200 outline-none focus-visible:ring-1 focus-visible:ring-slate-300"
+                    className="rounded-sm border-2 border-slate-300 bg-slate-100 px-2 outline-none focus-visible:ring-1 focus-visible:ring-slate-300 dark:border-slate-600 dark:bg-slate-600 dark:text-slate-200"
                     onPaste={handlePaste}
                   />
                 </TextField>
