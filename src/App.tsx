@@ -32,7 +32,9 @@ function App() {
       });
     }
   }
-  function onPlayerError(event: YT.OnErrorEvent) {}
+  function onPlayerError(event: YT.OnErrorEvent) {
+    console.error("error", event);
+  }
 
   window.onYouTubeIframeAPIReady = function () {
     window.player = new YT.Player("player", {
@@ -67,6 +69,7 @@ function App() {
   }
 
   function handlePaste(event: React.ClipboardEvent<HTMLInputElement>) {
+    console.log("pasting", event.clipboardData.getData("text"));
     send({
       type: "got ytid",
       payload: {
@@ -103,6 +106,14 @@ function App() {
                   <Input
                     className="rounded-sm border-2 border-slate-300 bg-slate-100 px-2 outline-none focus-visible:ring-1 focus-visible:ring-slate-300 dark:border-slate-600 dark:bg-slate-600 dark:text-slate-200"
                     onPaste={handlePaste}
+                    onChange={(e) => {
+                      if (e.currentTarget.value.length === 11) {
+                        send({
+                          type: "got ytid",
+                          payload: { ytid: e.currentTarget.value },
+                        });
+                      }
+                    }}
                   />
                 </TextField>
               </Form>
@@ -149,8 +160,9 @@ function App() {
               Copy url
             </Button>
           )}
-
-          {/* <pre>{JSON.stringify(state.context, null, 2)}</pre> */}
+          {/* 
+          <pre>{JSON.stringify(state.value, null, 2)}</pre>
+          <pre>{JSON.stringify(state.context, null, 2)}</pre> */}
         </div>
       </div>
     </main>

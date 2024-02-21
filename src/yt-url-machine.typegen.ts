@@ -40,7 +40,7 @@ export interface Typegen0 {
     "assign startTime": "set startTime";
     "assign ytid": "got ytid";
     "calculate url": "set endTime" | "set startTime" | "video loaded";
-    "check url": "ready";
+    "check url": "got ytid" | "ready";
     loadVideoById: "" | "got ytid";
     "reset error": "xstate.after(1500)#YT URL maker.Ready.Show url.Show error";
   };
