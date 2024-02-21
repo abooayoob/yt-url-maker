@@ -11,20 +11,20 @@ declare global {
 }
 
 function App() {
-  const [state, send, actor] = useMachine(ytUrlMachine);
+  const [state, send] = useMachine(ytUrlMachine);
 
-  function onPlayerReady(event: YT.PlayerEvent) {
+  function onPlayerReady() {
     send({ type: "ready" });
   }
   function onPlayerStateChange(event: YT.OnStateChangeEvent) {
-    const nameMap = {
-      [YT.PlayerState.BUFFERING]: "Buffering",
-      [YT.PlayerState.CUED]: "Cued",
-      [YT.PlayerState.UNSTARTED]: "Unstarted",
-      [YT.PlayerState.PLAYING]: "Playing",
-      [YT.PlayerState.PAUSED]: "Paused",
-      [YT.PlayerState.ENDED]: "Ended",
-    };
+    // const nameMap = {
+    //   [YT.PlayerState.BUFFERING]: "Buffering",
+    //   [YT.PlayerState.CUED]: "Cued",
+    //   [YT.PlayerState.UNSTARTED]: "Unstarted",
+    //   [YT.PlayerState.PLAYING]: "Playing",
+    //   [YT.PlayerState.PAUSED]: "Paused",
+    //   [YT.PlayerState.ENDED]: "Ended",
+    // };
     if (event.data === YT.PlayerState.PLAYING) {
       send({
         type: "video loaded",

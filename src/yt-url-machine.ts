@@ -172,7 +172,7 @@ export const ytUrlMachine = createMachine(
   },
   {
     actions: {
-      "check url": assign((context, event) => {
+      "check url": assign(() => {
         const url = new URL(window.location.href);
         let ytid = url.searchParams.get("ytid");
 
@@ -183,7 +183,7 @@ export const ytUrlMachine = createMachine(
           ytid,
         };
       }),
-      "assign ytid": assign((context, event) => {
+      "assign ytid": assign((_, event) => {
         if (event.payload.ytid.includes("http")) {
           return {
             ytid: getYtIdFromUrl(event.payload.ytid),
@@ -194,12 +194,12 @@ export const ytUrlMachine = createMachine(
           };
         }
       }),
-      "assign duration": assign((context, event) => {
+      "assign duration": assign((_, event) => {
         return {
           duration: event.payload.duration,
         };
       }),
-      "calculate url": assign((context, event) => {
+      "calculate url": assign((context) => {
         const url = new URL(`https://youtu.be/${context.ytid}`);
         if (context.startTime) {
           url.searchParams.set("start", context.startTime.toString());
@@ -211,20 +211,20 @@ export const ytUrlMachine = createMachine(
           generatedUrl: url.toString(),
         };
       }),
-      loadVideoById: (context, event) => {
+      loadVideoById: (context) => {
         window.player.loadVideoById(context.ytid || "");
       },
-      "assign startTime": assign((context, event) => {
+      "assign startTime": assign((_, event) => {
         return {
           startTime: event.payload.startTime,
         };
       }),
-      "assign endTime": assign((context, event) => {
+      "assign endTime": assign((_, event) => {
         return {
           endTime: event.payload.endTime,
         };
       }),
-      "assign error": assign((context, event) => {
+      "assign error": assign((_, event) => {
         switch (event.type) {
           case "set startTime":
             return {
@@ -240,14 +240,14 @@ export const ytUrlMachine = createMachine(
             };
         }
       }),
-      "reset error": assign((context, event) => {
+      "reset error": assign(() => {
         return {
           error: null,
         };
       }),
     },
     guards: {
-      "has ytid": (context, event) => {
+      "has ytid": (context) => {
         return context.ytid !== null;
       },
       "before endTime": (context, event) => {
@@ -263,7 +263,7 @@ export const ytUrlMachine = createMachine(
       },
     },
     services: {
-      "copy url": async (context, event) => {
+      "copy url": async (context) => {
         if (!context.generatedUrl) {
           throw new Error("No url to copy");
         } else {
