@@ -60,6 +60,7 @@ function App() {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    console.log("submitting", event.currentTarget.theinput.value);
     send({
       type: "got ytid",
       payload: {
@@ -97,7 +98,7 @@ function App() {
         <div className="flex flex-col gap-4 p-4">
           {state.matches("Ready") && (
             <div className="flex flex-col items-start gap-4">
-              <Form onSubmit={handleSubmit}>
+              <Form className="flex items-end gap-2" onSubmit={handleSubmit}>
                 <TextField
                   className="flex flex-col items-baseline gap-1"
                   name="theinput"
@@ -116,6 +117,12 @@ function App() {
                     }}
                   />
                 </TextField>
+                <Button
+                  type="submit"
+                  className="h-fit rounded-sm  border-2 border-slate-300 px-2 py-0 outline-none focus-visible:ring-1 focus-visible:ring-slate-300 pressed:bg-slate-600"
+                >
+                  Load
+                </Button>
               </Form>
               <div className="flex gap-2">
                 <Button
