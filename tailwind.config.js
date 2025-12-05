@@ -1,8 +1,10 @@
+import tailwindcssReactAriaComponents from "tailwindcss-react-aria-components";
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {},
   },
-  plugins: [require("tailwindcss-react-aria-components")],
+  plugins: [tailwindcssReactAriaComponents],
 };
